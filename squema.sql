@@ -1,0 +1,38 @@
+CREATE DATABASE IF NOT EXISTS `inventory`;
+USE `inventory`;
+
+CREATE TABLE USERS (
+    id INT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE PRODUCTS (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    price FLOAT NOT NULL,
+    created_by INT NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (created_by) REFERENCES USERS(id)
+);
+
+CREATE TABLE ROLES (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE USER_ROLES (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    role_id INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES USERS(id),
+    FOREIGN KEY (role_id) REFERENCES ROLES(id)
+);
+
+INSERT INTO ROLES (id, name) VALUES (1, 'admin');
+INSERT INTO ROLES (id, name) VALUES (2, 'seller');
+INSERT INTO ROLES (id, name) VALUES (3, 'customer');
